@@ -4,9 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vue Practice</title>
+
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      body {
+        padding: 10px;
+      }
+      nav {
+        background-color: black;
+        text-align: center;
+        color: aliceblue;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .nav-text {
+        font-size: 25px;
+      }
+      ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+      }
+      li {
+        margin-right: 15px;
+        font-size: 25px;
+      }
+      a {
+        text-decoration: none;
+        color: aliceblue;
+      }
+    </style>
   </head>
   <body>
+    <nav>
+      <p class="nav-text">Vue Practice</p>
+      <ul>
+        <li v-for="title in titles">
+          <a :href="title.link">{{title.text}}</a>
+        </li>
+      </ul>
+    </nav>
     <div id="content">
       <h1>{{pageTitle}}</h1>
       <p>{{content}}</p>
@@ -14,12 +53,22 @@
   </body>
   <script>
     const { createApp } = Vue;
-
+    createApp({
+      data() {
+        return {
+          titles: [
+            { text: "Home", link: "index.html" },
+            { text: "About", link: "about.html" },
+            { text: "Contact", link: "contact.html" },
+          ],
+        };
+      },
+    }).mount("nav");
     createApp({
       data() {
         return {
           pageTitle: "Hello Vue!",
-          content: "Hello this is my first view js content!",
+          content: "Hello this is my first vue js content!",
         };
       },
     }).mount("#content");

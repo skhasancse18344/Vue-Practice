@@ -56,14 +56,14 @@
         </li>
       </ul>
     </nav>
-    <div id="content">
-      <h1>{{ pages[activePage].pageTitle }}</h1>
-      <p>{{ pages[activePage].content }}</p>
-    </div>
-
+    <page-viewer
+      :page="pages[activePage]"
+      :page-title=" pages[activePage].pageTitle"
+      :page-content="pages[activePage].content"
+    ></page-viewer>
     <script>
       const { createApp } = Vue;
-      createApp({
+      const app = createApp({
         data() {
           return {
             activePage: 0,
@@ -90,7 +90,16 @@
             ],
           };
         },
-      }).mount("body");
+      });
+      app.component("page-viewer", {
+        // props: ["pageTitle", "pageContent"],
+        props: ["page"],
+        template: `  <div >
+      <h1>{{page.pageTitle}}</h1>
+      <p>{{page.content}}</p>
+    </div>`,
+      });
+      app.mount("body");
     </script>
   </body>
 </html>

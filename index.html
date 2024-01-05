@@ -42,20 +42,11 @@
     </style>
   </head>
   <body>
-    <nav>
-      <p class="nav-text">Vue Practice</p>
-      <ul>
-        <li v-for="(page, index) in pages" :key="index">
-          <a
-            v-bind:title="`This is a ${page.text} Page Link`"
-            :class="{active:activePage === index}"
-            :href="page.link"
-            @click.prevent="activePage = index"
-            >{{page.text}}</a
-          >
-        </li>
-      </ul>
-    </nav>
+    <nav-bar
+      :pages="pages"
+      :active-page="activePage"
+      :nav-link-click="(index)=>activePage=index"
+    ></nav-bar>
     <page-viewer
       :page="pages[activePage]"
       :page-title=" pages[activePage].pageTitle"
@@ -98,6 +89,22 @@
       <h1>{{page.pageTitle}}</h1>
       <p>{{page.content}}</p>
     </div>`,
+      });
+      app.component("nav-bar", {
+        props: ["pages", "activePage", "navLinkClick"],
+        template: `    <nav>
+      <p class="nav-text">Vue Practice</p>
+      <ul>
+        <li v-for="(page, index) in pages" :key="index">
+          <a
+            v-bind:title="\`This is a \${page.text} \${activePage} Page Link\`"
+            :class="{active:activePage==index}"
+            :href="page.link"
+            @click.prevent="navLinkClick(index)"
+            >{{page.text}}</a>
+        </li>
+      </ul>
+    </nav>`,
       });
       app.mount("body");
     </script>
